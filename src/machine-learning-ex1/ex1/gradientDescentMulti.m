@@ -19,11 +19,11 @@ for iter = 1:num_iters
 
 
 
+    hypothesis = X*theta;
+    err = hypothesis - y;
+    delta = X' * err;
 
-
-
-
-
+    theta = theta - alpha * 1/m * delta;
 
 
 

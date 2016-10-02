@@ -82,8 +82,8 @@ X = [ones(m, 1) X];
 fprintf('Running gradient descent ...\n');
 
 % Choose some alpha value
-alpha = 0.01;
-num_iters = 400;
+alpha = 1.0;
+num_iters = 10;
 
 % Init Theta and Run Gradient Descent 
 theta = zeros(3, 1);
@@ -106,6 +106,14 @@ fprintf('\n');
 % not need to be normalized.
 price = 0; % You should change this
 
+x = [1650 3];
+normalizer = [mu sigma];
+for i = 1:length(x)
+	x(i) = (x(i) - mu(i))/sigma(i);
+end
+
+x = [1 x];
+price = x*theta;
 
 % ============================================================
 
@@ -151,6 +159,8 @@ fprintf('\n');
 % ====================== YOUR CODE HERE ======================
 price = 0; % You should change this
 
+x = [1 1650 3];
+price = x*theta;
 
 % ============================================================
 
