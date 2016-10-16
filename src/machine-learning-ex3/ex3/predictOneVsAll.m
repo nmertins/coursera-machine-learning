@@ -32,7 +32,17 @@ X = [ones(m, 1) X];
 
 
 
+predictions = X * all_theta';
+p = max(predictions, [], 2);
 
+for i = 1:m
+	for j = 1:num_labels
+		if(predictions(i,j) == p(i))
+			p(i) = j;
+			break;
+		endif
+	end
+end
 
 
 
