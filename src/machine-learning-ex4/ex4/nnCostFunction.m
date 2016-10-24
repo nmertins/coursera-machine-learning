@@ -63,22 +63,70 @@ Theta2_grad = zeros(size(Theta2));
 %
 
 
+% Part 1
+X = [ones(m, 1) X];
+
+z2 = X * Theta1';
+a2 = sigmoid(z2);
+
+a2 = [ones(size(a2,1), 1) a2];
+
+z3 = a2 * Theta2';
+a3 = sigmoid(z3);
+
+h = a3';
+
+% printf('Size of h: %d x %d\n', size(h));
+
+d3 = [];
+for i = 1:m
+	y_vec = zeros(num_labels, 1);
+	y_vec(y(i)) = 1;
+
+	J_temp = -y_vec' * log(h(:,i)) - (1 - y_vec') * log(1 - h(:,i));
+	J_temp = (1/m) * J_temp;
+
+	J = J + J_temp;
+
+	% grad_temp = X' * (h - y_vec');
+	% grad_temp = grad_temp/m;
+	% grad = grad + grad_temp;
+
+	% printf('Size of h(:,1): %d x %d\n', size(h(:,i)));
+	d3 = [d3 (h(:,i) - y_vec)];
+
+end
+
+theta1_reg = Theta1(:, 2:end);
+theta2_reg = Theta2(:, 2:end);
 
 
+d2 = theta2_reg' * d3;
+d2 = d2' .* sigmoidGradient(z2);
 
+% printf('Size of d3: %d x %d\n', size(d3));
+% printf('Size of a2: %d x %d\n', size(a2));
+% printf('Size of d2: %d x %d\n', size(d2));
+% printf('Size of X: %d x %d\n', size(X));
 
+Theta2_grad = d3 * a2;
+Theta2_grad = (1/m) * Theta2_grad;
+Theta2_grad_reg = (lambda/m) * theta2_reg;
+Theta2_grad(:, 2:end) = Theta2_grad(:, 2:end) + Theta2_grad_reg;
+% printf('Size of Theta2_grad: %d x %d\n', size(Theta2_grad));
+% printf('Size of Theta2_grad_reg: %d x %d\n', size(Theta2_grad_reg));
 
+Theta1_grad = d2' * X;
+Theta1_grad = (1/m) * Theta1_grad;
+Theta1_grad_reg = (lambda/m) * theta1_reg;
+Theta1_grad(:, 2:end) = Theta1_grad(:, 2:end) + Theta1_grad_reg;
+% printf('Size of Theta1_grad: %d x %d\n', size(Theta1_grad));
+% printf('Size of Theta1_grad_reg: %d x %d\n', size(Theta1_grad_reg));
 
-
-
-
-
-
-
-
-
-
-
+% Part 3
+theta1_reg = theta1_reg.^2;
+theta2_reg = theta2_reg.^2;
+J = J + (lambda/(2 * m)) * (sum(theta1_reg(:)) + sum(theta2_reg(:)));
 
 % -------------------------------------------------------------
 
