@@ -20,14 +20,28 @@ grad = zeros(size(theta));
 %
 
 
+% printf('Size of X: %d x %d\n', size(X));
+% printf('Size of y: %d x %d\n', size(y));
+% printf('Size of theta: %d x %d\n', size(theta));
 
 
+h = X * theta;
+err = h - y;
+sqr_err = err' * err;
+sqr_err = (1/(2*m)) * sqr_err;
 
 
+theta_reg = theta(2:end,:);
+reg_term = theta_reg' * theta_reg;
+reg_term = (lambda/(2*m)) * reg_term;
 
 
+J = sqr_err + reg_term;
 
-
+% printf('Size of err_grad: %d x 1\n', size(theta, 1))
+grad = (1/m) * (X' * err);
+% printf('Size of grad: %d x %d\n', size(grad));
+grad(2:end,:) = grad(2:end,:) + ((lambda/m) * theta(2:end,:));
 
 
 % =========================================================================

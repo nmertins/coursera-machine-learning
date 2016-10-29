@@ -54,9 +54,19 @@ error_val   = zeros(m, 1);
 % ---------------------- Sample Solution ----------------------
 
 
+% printf('Size of X: %d x %d\n', size(X));
+% printf('Size of y: %d x %d\n', size(y));
+% printf('Size of Xval: %d x %d\n', size(Xval));
+% printf('Size of yval: %d x %d\n', size(yval));
 
+for i = 1:m
+	theta = trainLinearReg(X(1:i,:), y(1:i), lambda);
+	[J_train, grad_train] = linearRegCostFunction(X(1:i,:), y(1:i), theta, 0);
+	error_train(i) = J_train;
 
-
+	[J_val, grad_val] = linearRegCostFunction(Xval, yval, theta, 0);
+	error_val(i) = J_val;
+end
 
 
 % -------------------------------------------------------------
