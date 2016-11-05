@@ -23,9 +23,32 @@ sigma = 0.3;
 %        mean(double(predictions ~= yval))
 %
 
+% printf('Size of X: %d x %d\n', size(X));
+% printf('Size of y: %d x %d\n', size(y));
+% printf('Size of Xval: %d x %d\n', size(Xval));
+% printf('Size of yval: %d x %d\n', size(yval));
 
+lowestError = 1000000000;
 
+valueRange = [0.01 0.03 0.1 0.3 1 3 10 30];
+for i =1:length(valueRange)
+	for j = 1:length(valueRange)
+		possibleC = valueRange(i);
+		possibleSigma = valueRange(j);
 
+		model= svmTrain(X, y, possibleC, @(x1, x2) gaussianKernel(x1, x2, possibleSigma));
+
+		predictions = svmPredict(model, Xval);
+		predictionError = mean(double(predictions ~= yval));
+
+		% printf('For C = %d, sigma = %d:\tpredictionError = %f\n', possibleC, possibleSigma, predictionError);
+		if(predictionError < lowestError)
+			C = possibleC;
+			sigma = possibleSigma;
+			lowestError = predictionError;
+		endif				
+	end
+end
 
 
 

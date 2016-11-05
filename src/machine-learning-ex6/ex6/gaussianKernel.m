@@ -16,9 +16,9 @@ sim = 0;
 %
 %
 
-
-
-
+euclidDistance = sum((x1 - x2).^2);
+exponent = euclidDistance/(2 * sigma^2);
+sim = e^(-exponent);
 
 
 % =============================================================
