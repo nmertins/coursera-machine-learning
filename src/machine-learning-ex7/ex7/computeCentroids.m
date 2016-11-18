@@ -26,11 +26,18 @@ centroids = zeros(K, n);
 % Note: You can use a for-loop over the centroids to compute this.
 %
 
+% printf('Size of X: %d x %d\n', size(X));
+% printf('Size of idx: %d x %d\n', size(idx));
 
+centroidMeans = zeros(K, 1 + n);
+for i = 1:m
 
+	centroidMeans(idx(i),1) = centroidMeans(idx(i),1) + 1;
+	centroidMeans(idx(i), 2:end) = centroidMeans(idx(i), 2:end) + X(i,:);
 
+end
 
-
+centroids = centroidMeans(:,2:end)./centroidMeans(:,1);
 
 
 % =============================================================

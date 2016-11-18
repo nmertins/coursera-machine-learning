@@ -14,7 +14,7 @@ idx = zeros(size(X,1), 1);
 % ====================== YOUR CODE HERE ======================
 % Instructions: Go over every example, find its closest centroid, and store
 %               the index inside idx at the appropriate location.
-%               Concretely, idx(i) should contain the index of the centroid
+%               Concretely, idx(i) should contain the index of the centroidx
 %               closest to example i. Hence, it should be a value in the 
 %               range 1..K
 %
@@ -22,7 +22,38 @@ idx = zeros(size(X,1), 1);
 %
 
 
+% printf('Size of X: %d x %d\n', size(X));
+% printf('Size of centroids: %d x %d\n', size(centroids))
 
+
+for i = 1:length(idx)
+	x = X(i,:);
+	leastDistance = inf;
+
+	% printf('--------------------------------\n');
+	% printf('Data point:');
+	% disp(x);
+	
+	for j = 1:K	
+		centroidLocation = centroids(j,:);
+		vectorDiff = x - centroidLocation;
+		euclDist = sqrt(sum(vectorDiff.^2));
+		
+		% printf('Centroid %d:', j);
+		% disp(centroidLocation);
+		% printf('Distance:');
+		% disp(euclDist);
+		
+		if euclDist < leastDistance
+			leastDistance = euclDist;
+			idx(i) = j;
+		end
+		
+		% printf('Closest Centroid: %d\n', idx(i));
+		% printf('--------------------------------\n');
+	end
+
+end
 
 
 

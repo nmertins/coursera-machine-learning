@@ -21,6 +21,20 @@ X_rec = zeros(size(Z, 1), size(U, 1));
 %               Notice that U(j, 1:K) is a row vector.
 %               
 
+% printf('Size of U: %d x %d\n', size(U));
+% printf('Size of Z: %d x %d\n', size(Z));
+% printf('Size of X_rec: %d x %d\n', size(X_rec));
+
+
+for i = 1:size(Z, 1)
+
+	for j = 1:size(U, 1)
+
+		X_rec(i,j) = Z(i, :) * U(j, 1:K)';
+
+	end
+
+end
 
 
 % =============================================================
